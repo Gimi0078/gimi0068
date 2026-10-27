@@ -23,17 +23,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Prepara la chiave API
+      - name: Controlla la chiave
+        id: chiave
         env:
           ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
         run: |
-          [ -n "$ASC_KEY_P8" ] || { echo "::error::Manca il segreto ASC_KEY_P8"; exit 1; }
+          if [ -n "$ASC_KEY_P8" ]; then echo "ok=true" >> "$GITHUB_OUTPUT"
+          else echo "::warning::Manca il segreto ASC_KEY_P8: build per TestFlight saltata"; fi
+
+      - name: Prepara la chiave API
+        if: steps.chiave.outputs.ok == 'true'
+        env:
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+        run: |
           mkdir -p "$RUNNER_TEMP/keys"
           printf '%s\n' "$ASC_KEY_P8" > "$RUNNER_TEMP/keys/AuthKey_$ASC_KEY_ID.p8"
           echo "CHIAVE=$RUNNER_TEMP/keys/AuthKey_$ASC_KEY_ID.p8" >> "$GITHUB_ENV"
           sed -i '' "s/TEAM_ID/$APPLE_TEAM_ID/" ios/ExportOptions.plist
 
       - name: Compila (Archive)
+        if: steps.chiave.outputs.ok == 'true'
         run: |
           xcodebuild archive \
             -project ios/MagazzinoElettrico.xcodeproj \
@@ -50,6 +59,7 @@ jobs:
             CURRENT_PROJECT_VERSION=${{ github.run_number }}
 
       - name: Carica su TestFlight
+        if: steps.chiave.outputs.ok == 'true'
         run: |
           xcodebuild -exportArchive \
             -archivePath "$ARCHIVIO" \
