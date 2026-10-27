@@ -1,0 +1,22 @@
+# Controlla che l'app iPhone si compili, senza firma e senza account Apple (simulatore).
+name: Verifica iOS
+
+on:
+  workflow_dispatch:
+  push:
+    paths: ["ios/**", ".github/workflows/verifica-ios.yml"]
+
+jobs:
+  compila:
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compila per il simulatore
+        run: |
+          xcodebuild build \
+            -project ios/MagazzinoElettrico.xcodeproj \
+            -scheme MagazzinoElettrico \
+            -configuration Debug \
+            -destination "generic/platform=iOS Simulator" \
+            CODE_SIGNING_ALLOWED=NO
