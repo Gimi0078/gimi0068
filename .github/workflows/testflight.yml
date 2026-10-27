@@ -1,10 +1,8 @@
 # Compila l'app iPhone su un Mac di GitHub e la carica su TestFlight.
 # Parte da sola a ogni modifica della cartella ios/ su main, oppure a mano da Actions > TestFlight > Run workflow.
-# Segreti richiesti (Settings > Secrets and variables > Actions):
-#   APPLE_TEAM_ID   Team ID dell'account Apple Developer (10 caratteri)
-#   ASC_KEY_ID      Key ID della chiave API di App Store Connect
-#   ASC_ISSUER_ID   Issuer ID della stessa pagina
-#   ASC_KEY_P8      contenuto completo del file AuthKey_XXXX.p8
+# Unico segreto richiesto (Settings > Secrets and variables > Actions):
+#   ASC_KEY_P8      contenuto completo del file AuthKey_73BG4J4Z59.p8
+# Team ID, Key ID e Issuer ID non sono segreti e stanno qui sotto.
 name: TestFlight
 
 on:
@@ -18,18 +16,12 @@ jobs:
     runs-on: macos-15
     timeout-minutes: 45
     env:
-      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-      ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
-      ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+      APPLE_TEAM_ID: MHVP7648XJ
+      ASC_KEY_ID: 73BG4J4Z59
+      ASC_ISSUER_ID: 0b8ed527-0cbc-471a-b727-4a631ec4eea0
       ARCHIVIO: ${{ runner.temp }}/MagazzinoElettrico.xcarchive
     steps:
       - uses: actions/checkout@v4
-
-      - name: Controlla i segreti
-        run: |
-          for s in APPLE_TEAM_ID ASC_KEY_ID ASC_ISSUER_ID; do
-            [ -n "${!s}" ] || { echo "::error::Manca il segreto $s"; exit 1; }
-          done
 
       - name: Prepara la chiave API
         env:

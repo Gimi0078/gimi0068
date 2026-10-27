@@ -16,8 +16,8 @@ Gestione del magazzino per installatori elettrici. Versione beta 0.1.0.
 3. In App Store Connect > Utenti e accessi > Integrazioni > Chiavi API dell'App Store Connect:
    generare una chiave con ruolo **Admin**, scaricare il file `.p8` (si scarica una volta sola) e annotare Key ID e Issuer ID.
 4. Il Team ID si trova in developer.apple.com > Account > Membership details.
-5. In questo repository: Settings > Secrets and variables > Actions > New repository secret, e aggiungere
-   `APPLE_TEAM_ID`, `ASC_KEY_ID`, `ASC_ISSUER_ID` e `ASC_KEY_P8` (il testo completo del file .p8).
+5. In questo repository: Settings > Secrets and variables > Actions > New repository secret:
+   nome `ASC_KEY_P8`, valore il testo completo del file .p8. Team ID, Key ID e Issuer ID sono già nel workflow.
 6. Actions > TestFlight > Run workflow. Dopo circa 15 minuti la build compare in App Store Connect > TestFlight.
 7. Aggiungere i tester (gruppo interno subito, gruppo esterno o link pubblico dopo la revisione Apple).
 
