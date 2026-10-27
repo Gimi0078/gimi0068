@@ -21,4 +21,4 @@ Gestione del magazzino per installatori elettrici. Versione beta 0.1.0.
 6. Actions > TestFlight > Run workflow. Dopo circa 15 minuti la build compare in App Store Connect > TestFlight.
 7. Aggiungere i tester (gruppo interno subito, gruppo esterno o link pubblico dopo la revisione Apple).
 
-Account dell'app (password iniziali da cambiare al primo accesso): Magazziniere `Magazzino2026`, Sviluppatore `Sviluppo2026`.
+Account dell'app: Magazziniere e Sviluppatore. Le password iniziali sono nelle istruzioni consegnate ai tester e vanno cambiate al primo accesso.
